@@ -1,0 +1,18 @@
+const express=require("express");
+const mongoose=require("mongoose");
+const authorization=require("./middlewares/authorization");
+const authRoute=require("./routes/accountRoute");
+const categoryRoute=require("./routes/categoryRoute");
+const productRoute=require("./routes/productRoute");
+const orderRoute=require("./routes/orderRoute");
+var connectionString="mongodb+srv://santosh:Manakamana@cluster0-5xtk0.mongodb.net/fooddelivery?retryWrites=true&w=majority";
+const app=express();
+app.use(express.json());
+app.use(express.static(__dirname+"/public"));
+mongoose.connect(connectionString,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true});
+const server=app.listen(process.env.PORT||8080,()=>console.log("Server running    ..."));
+const appMiddleware=require("./middlewares/appmiddleware");
+app.use("/account",appMiddleware,authRoute);
+app.use("/categories",appMiddleware,categoryRoute);
+app.use("/products",appMiddleware,productRoute);
+app.use("/orders",appMiddleware,authorization,orderRoute);
