@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.static(__dirname+"/public"));
 mongoose.connect(connectionString,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true});
 const server=app.listen(process.env.PORT||8080,()=>console.log("Server running    ..."));
-console.log(precess.env.name);
+console.log(process.env.name);
 const appMiddleware=require("./middlewares/appmiddleware");
 app.use("/account",appMiddleware,authRoute);
 app.use("/categories",appMiddleware,categoryRoute);
